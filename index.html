@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <title>Carregando o mapa ao carregar uma rota</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5bivt4kVXJAzd2wkeX2c25nUbUsbCZLA&callback=initMap"></script>
+  </head>
+  <body onload="initMap()">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <div id="mapa" style="height: 500px;"></div>
+    <script>
+      function initMap() {
+        var mapa = new google.maps.Map(document.getElementById('mapa'), {
+          center: {lat: -15.772955493750331, lng: -47.889134127981215},
+          zoom: 4
+        });
+
+        fetch('http://localhost:3000/locations')
+          .then(response => response.json())
+          .then(dados => {
+            dados.forEach(item => {
+              let marcador = new google.maps.Marker({
+                position: {lat: cordinates.lat, lng: item.cordinates.lng},
+                map: mapa,
+                title: item.name
+              });
+            });
+          });
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5bivt4kVXJAzd2wkeX2c25nUbUsbCZLA&callback=initMap"></script>
+  </body>
+</html>
